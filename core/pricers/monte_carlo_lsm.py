@@ -46,7 +46,8 @@ def price_american_mc_lsm(option: Option, n_paths=10000, n_steps=50, poly_degree
         X = S_paths[in_the_money, t]
         Y = cashflow[in_the_money] * discount
 
-        if len(X) == 0:
+        if len(X) < poly_degree + 1:
+            # Not enough points to fit the polynomial, skip regression
             continue
 
         # Regression: estimate continuation value
